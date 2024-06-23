@@ -1,0 +1,1009 @@
+#VRML V2.0 utf8
+
+#Floor
+Transform {
+  translation 0 0 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0.8 0.8
+        }
+      }
+      geometry Box {
+        size 20 0.1 20
+      }
+    }
+    
+    # Walls
+    Transform {
+      translation 0 5 -10
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 20 10 0.1
+          }
+        }
+      ]
+    }
+
+Transform { #1
+      translation -10 1.75 -3.5
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 0.1 3.5 9
+          }
+        }
+      ]
+    }
+	  Transform { #1.1
+      translation -10 5 -9
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 0.1 10 2
+          }
+        }
+      ]
+    }
+	  Transform { #1.2
+	translation -10 5 5.5
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 0.1 10 9
+          }
+        }
+      ]
+    }
+	Transform { #1.3
+      translation -10 9.25 -3.5
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 0.1 1.5 9
+          }
+        }
+      ]
+    }
+	Transform { #1.4
+      translation -10 6 -3.5
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 0.1 5 5
+          }
+        }
+      ]
+    }
+    Transform {
+      translation 10 5 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 0.1 10 20
+          }
+        }
+      ]
+    }
+        # Frame 1
+        Transform {
+          translation 9.9 7 -4
+	  rotation 0 1 0 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 1 1
+                }
+                texture ImageTexture {
+                  url "frame1.JPG"
+                }
+              }
+              geometry Box {
+                size 2 3 0.1
+		solid FALSE
+              }
+            }
+          ]
+        }
+
+        # Frame 2
+        Transform {
+          translation 9.9 5 1
+	  rotation 0 1 0 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 0.5 0.5
+                }
+                texture ImageTexture {
+                  url "frame2.JPG"
+                }
+              }
+              geometry Box {
+                size 2 3 0.1
+		solid FALSE
+              }
+            }
+          ]
+        }
+
+        # Frame 3
+        Transform {
+          translation 9.9 3 6
+	  rotation 0 1 0 1.57
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 1 1 
+                }
+                texture ImageTexture {
+                  url "frame3.JPG"
+                }
+              }
+              geometry Box {
+                size 2 3 0.1
+		solid FALSE
+              }
+            }
+          ]
+        }
+#cube 
+Group {
+  children [
+    DEF RotaterS SphereSensor {}
+    DEF Cube1 Transform {translation 6 1 -8
+      children Shape {
+        geometry Box {}
+        appearance Appearance {
+	      material Material {diffuseColor 1 1 0}}}}]}
+Group {
+  children [
+    DEF RotaterC CylinderSensor {}
+    DEF Cube2 Transform {translation  6 1 -8
+      children Shape {
+        geometry Box {}
+        appearance Appearance {
+	      material Material {diffuseColor 0 1 0}}}}]}
+
+ROUTE RotaterC.rotation_changed TO Cube2.set_rotation
+ROUTE RotaterS.rotation_changed TO Cube1.set_rotation
+
+  
+# Board
+    Transform {
+      translation 0 4 -8
+      children [
+	DEF S3 TouchSensor {}
+        Shape {
+          appearance Appearance {
+	    texture 
+	DEF V3 MovieTexture {loop TRUE
+          stopTime 0 startTime 1
+          url "video_board.mpeg"}
+            material Material {
+              diffuseColor 0.5 0.5 0.5
+            }
+          }
+          geometry Box {
+            size 4 2 0.1
+          }
+        }
+ROUTE S3.touchTime TO V3.startTime
+		
+        # Pendular clock mechanism
+        DEF Pendular Transform {
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {}
+              }
+              geometry Box {
+                size 0.1 0.1 0.1
+              }
+            }
+            Transform {
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {}
+                  }
+                  geometry Box {
+                    size 0.1 1 0.1
+                  }
+                }
+              ]
+              translation 0 -0.1 0
+            }
+            Transform {
+              children [
+                Shape {
+                  appearance Appearance {
+                    material Material {}
+                  }
+                  geometry Sphere {
+                    radius 0.2
+                  }
+                }
+              ]
+              translation 0 -1 0
+            }
+          ]
+          translation 0 3 0
+        }
+        DEF Clock TimeSensor {
+          cycleInterval 10.0
+          loop TRUE
+        }
+        DEF Interpolator OrientationInterpolator {
+          key [0.0 0.25 0.5 0.75 1.0]
+          keyValue [
+            0 0 1 6.28
+            0 0 1 4.71
+            0 0 1 3.14
+            0 0 1 1.57
+	    0 1 0 0 
+          ]
+        }
+        ROUTE Clock.fraction_changed TO Interpolator.set_fraction
+        ROUTE Interpolator.value_changed TO Pendular.set_rotation
+      ]
+    }
+  
+    # Ceiling
+    Transform {
+      translation 0 10 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 5 1
+            }
+          }
+          geometry Box {
+            size 20 0.1 20
+          }
+        }
+      ]
+    }
+
+    # Teacher
+    DEF Teacher Transform {
+      translation 0 1 -5
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.5 0.2 0.0
+            }
+          }
+          geometry Box {
+            size 1 2 1
+          }
+        }
+        Transform {
+          translation 0 1.5 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0.8 0.6
+                }
+              }
+              geometry Sphere {
+                radius 0.5
+              }
+            }
+          ]
+        }
+      # Add movement to teacher
+      DEF TeacherMovement TimeSensor {
+        cycleInterval 20.0
+        loop TRUE
+      }
+      DEF TeacherInterpolator OrientationInterpolator {
+        key [0.0 0.5 1.0]
+        keyValue [
+          0 0 1 0.0
+          0 0 1 0
+          0 0 1 0.0
+        ]
+      }
+      ROUTE TeacherMovement.fraction_changed TO TeacherInterpolator.set_fraction
+      ROUTE TeacherInterpolator.value_changed TO Teacher.set_rotation
+
+      # Move teacher back and forth
+      DEF TeacherTranslationInterpolator PositionInterpolator {
+        key [0.0 0.5 1.0]
+        keyValue [
+          0 1.2 -5
+          0 1.2 -3
+          0 1.2 -5
+        ]
+      }
+      ROUTE TeacherMovement.fraction_changed TO TeacherTranslationInterpolator.set_fraction
+      ROUTE TeacherTranslationInterpolator.value_changed TO Teacher.set_translation
+  ]
+}
+	# Desk for teacher
+        Transform {
+          translation 0 0.5 -1.5
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.8 0.8 0.8
+                }
+              }
+              geometry Box {
+                size 3 1 1.5
+              }
+            }
+	# Add coffee cup to teacher's desk
+    	Transform {
+      	translation -1 0.9 -0.3
+      	children [
+       	 Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.8 0.4 0.2
+            }
+          }
+          geometry Cylinder {
+            height 0.5
+            radius 0.1
+          }
+        }
+        Transform {
+          translation 0 0.4 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.8 0.4 0.2
+                }
+              }
+              geometry Cylinder {
+                height 0.1
+                radius 0.1
+              }
+            }
+          ]
+        }
+      ]
+    }	
+
+ 
+DEF Win01 Transform {
+  translation -9 5.5 -4.5 children [
+    DEF Win01To01 TouchSensor {}
+    DEF Win01Sw01 Switch {choice [
+     Transform {
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 1 1
+		  transparency 0.5
+                }  
+              }
+              geometry Box {
+                size 2 5 0.1  
+              }
+            }
+	]}
+Transform {rotation 0 1 0 1.57
+	 center -1 0 0 children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 1  
+                  transparency 0.5
+                } 
+              }
+              geometry Box {
+                size 2 5 0.1 
+              }
+            }
+	]}
+] whichChoice 0} ]}
+
+DEF Win01Sc01 Script {
+ eventIn SFBool change
+ field SFNode input1 USE Win01To01
+ field SFNode input USE Win01Sw01
+ field SFNode output USE Win01Sw01
+ directOutput TRUE
+ url "javascript:
+  function change () { if (change&&input1.isActive)
+   output.whichChoice=(input.whichChoice+1)%2;
+  }"}
+ROUTE Win01To01.isActive TO Win01Sc01.change
+
+            
+DEF Win02 Transform {
+  translation -9 5.5 2.5 children [
+    DEF Win02To02 TouchSensor {}
+    DEF Win02Sw02 Switch {choice [
+     Transform {
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0.5 1 1
+				  transparency 0.5
+                }  
+              }
+              geometry Box {
+                size 2 5 0.1  
+              }
+            }
+	]}
+Transform {rotation 0 1 0 1.57
+	 center -1 0 0 children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 0 0 1  
+                  transparency 0.5
+                } 
+              }
+              geometry Box {
+                size 2 5 0.1 
+              }
+            }
+	]}
+] whichChoice 0} ]}
+
+
+DEF Win02Sc02 Script {
+ eventIn SFBool change
+ field SFNode input1 USE Win02To02
+ field SFNode input USE Win02Sw02
+ field SFNode output USE Win02Sw02
+ directOutput TRUE
+ url "javascript:
+  function change () { if (change&&input1.isActive)
+   output.whichChoice=(input.whichChoice+1)%2;
+  }"}
+ROUTE Win02To02.isActive TO Win02Sc02.change
+
+DEF Lig01 Transform {
+  translation 4 2.8 -5 children [
+    DEF Lig01To01 TouchSensor {}
+    Shape {appearance Appearance {
+		  material Material {diffuseColor 1 0 0}}
+    		geometry Sphere {radius 0.2}}
+    DEF Lig01Po01 PointLight {color 1 0 0 radius 20 on FALSE} ]}
+
+DEF Lig01Sc01 Script {
+ eventIn SFBool change
+ field SFNode input1 USE Lig01To01
+ field SFNode input USE Lig01Po01
+ field SFNode output USE Lig01Po01
+ directOutput TRUE
+ url "javascript:
+  function change () { if (change&&input1.isActive)
+   output.on=!(input.on);
+  }"}
+ROUTE Lig01To01.isActive TO Lig01Sc01.change
+
+DEF Lig02 Transform {
+  translation -4 2.8 -5 children [
+    DEF Lig02To01 TouchSensor {}
+    Shape {appearance Appearance {
+		  material Material {diffuseColor 0 0 1}}
+    		geometry Sphere {radius 0.2}}
+    DEF Lig02Po01 PointLight {color 0 0 1 radius 20 on FALSE} ]}
+
+DEF Lig02Sc01 Script {
+ eventIn SFBool change
+ field SFNode input1 USE Lig02To01
+ field SFNode input USE Lig02Po01
+ field SFNode output USE Lig02Po01
+ directOutput TRUE
+ url "javascript:
+  function change () { if (change&&input1.isActive)
+   output.on=!(input.on);
+  }"}
+ROUTE Lig02To01.isActive TO Lig02Sc01.change
+
+]
+}
+
+Transform {
+  translation -6 1 6
+  children [
+    DEF studentTouchSensor TouchSensor {}
+
+    # Body
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.5 0.7 1.0
+        }
+      }
+      geometry Box {
+        size 1 2 1
+      }
+    }
+
+    # Head
+    Transform {
+      translation 0 1.5 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 0.8 0.6
+            }
+          }
+          geometry Sphere {
+            radius 0.5
+          }
+        }
+      ]
+    }
+    
+    # Sound for student's voice
+    Sound {
+      source DEF studentVoice AudioClip {
+        url "student.mp2"
+        description "Student Voice"
+      }
+    }
+  ]
+}
+
+ROUTE studentTouchSensor.touchTime TO studentVoice.startTime
+
+# Define the Student1 object
+  DEF Student1 Transform {
+    translation -6 1 3
+    children [
+      Shape {
+        appearance Appearance {
+          material Material {
+            diffuseColor 0.8 0.2 0.5
+          }
+        }
+        geometry Box { size 1 2 1 }
+      }
+      Transform {
+        translation 0 1.5 0
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 1 0.8 0.6
+              }
+            }
+            geometry Sphere {
+              radius 0.5
+            }
+          }
+        ]
+      }
+      DEF ClickSensor TouchSensor {
+        description "Click to move student"
+      }
+    ]
+  }
+
+
+# Add movement to student
+DEF StudentMovement TimeSensor {
+  cycleInterval 10.0
+  loop TRUE
+  enabled FALSE
+}
+
+DEF StudentInterpolator PositionInterpolator {
+  key [0.0 0.5 1.0]
+  keyValue [
+    -6 1 3
+    -6 4 3 
+    -6 1 3
+  ]
+}
+
+ROUTE StudentMovement.fraction_changed TO StudentInterpolator.set_fraction
+ROUTE StudentInterpolator.value_changed TO Student1.set_translation
+
+# Add rotation to student
+DEF StudentRotationInterpolator OrientationInterpolator {
+  key [0.0 0.5 1.0]
+  keyValue [
+    0 0 1 0.0
+    0 0 1 0
+    0 0 1 0.0
+  ]
+}
+
+ROUTE StudentMovement.fraction_changed TO StudentRotationInterpolator.set_fraction
+ROUTE StudentRotationInterpolator.value_changed TO Student1.set_rotation
+
+# Define a Script node for BooleanToggle functionality
+DEF BooleanToggle Script {
+  field SFBool toggle FALSE
+  eventIn SFTime set_toggle
+  eventOut SFBool booleanOutput
+  url "javascript:
+    function set_toggle(value) {
+      toggle = !toggle;
+      booleanOutput = toggle;
+    }
+  "
+}
+
+# ROUTE connections
+ROUTE ClickSensor.touchTime TO BooleanToggle.set_toggle
+ROUTE BooleanToggle.booleanOutput TO StudentMovement.set_enabled
+
+
+  
+    Transform {
+      translation 0 1 3
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.8 0.4 0.7
+            }
+          }
+          geometry Box {
+            size 1 2 1
+          }
+        }
+        Transform {
+          translation 0 1.5 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0.8 0.6
+                }
+              }
+              geometry Sphere {
+                radius 0.5
+              }
+            }
+          ]
+        }
+      ]
+    }
+    Transform {
+      translation 6 1 3
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.5 0.1 0.9
+            }
+          }
+          geometry Box {
+            size 1 2 1
+          }
+        }
+        Transform {
+          translation 0 1.5 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0.8 0.6
+                }
+              }
+              geometry Sphere {
+                radius 0.5
+              }
+            }
+          ]
+        }
+      ]
+    }
+Transform {
+  translation -6 1 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.5 0.9 0.6
+        }
+      }
+      geometry Box {
+        size 1 2 1
+      }
+    }
+    Transform {
+      translation 0 1.5 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 0.8 0.6
+            }
+          }
+          geometry Sphere {
+            radius 0.5
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+ # Define the Student1 object
+  DEF Student2 Transform {  
+    translation 0 1 0
+    children [
+      Shape {
+        appearance Appearance {
+          material Material {
+            diffuseColor 0.3 0.5 0.7
+          }
+        }
+        geometry Box { size 1 2 1 }
+      }
+      Transform {
+        translation 0 1.5 0
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 1 0.8 0.6
+              }
+            }
+            geometry Sphere {
+              radius 0.5
+            }
+          }
+        ]
+      }
+      DEF ClickSensor TouchSensor {
+        description "Click to move student"
+      }
+    ]
+  }
+
+
+# Add movement to student
+DEF StudentMovement TimeSensor {
+  cycleInterval 10.0
+  loop TRUE
+  enabled FALSE
+}
+
+DEF StudentInterpolator PositionInterpolator {
+  key [0.0 0.5 1.0]
+  keyValue [
+    0 1 0
+    0 4 0
+    0 1 0
+  ]
+}
+
+ROUTE StudentMovement.fraction_changed TO StudentInterpolator.set_fraction
+ROUTE StudentInterpolator.value_changed TO Student2.set_translation
+
+# Add rotation to student
+DEF StudentRotationInterpolator OrientationInterpolator {
+  key [0.0 0.5 1.0]
+  keyValue [
+    0 0 1 0.0
+    0 0 1 0
+    0 0 1 0.0
+  ]
+}
+
+ROUTE StudentMovement.fraction_changed TO StudentRotationInterpolator.set_fraction
+ROUTE StudentRotationInterpolator.value_changed TO Student2.set_rotation
+
+# Define a Script node for BooleanToggle functionality
+DEF BooleanToggle Script {
+  field SFBool toggle FALSE
+  eventIn SFTime set_toggle
+  eventOut SFBool booleanOutput
+  url "javascript:
+    function set_toggle(value) {
+      toggle = !toggle;
+      booleanOutput = toggle;
+    }
+  "
+}
+
+# ROUTE connections
+ROUTE ClickSensor.touchTime TO BooleanToggle.set_toggle
+ROUTE BooleanToggle.booleanOutput TO StudentMovement.set_enabled
+
+
+
+
+
+ # Define the Student1 object
+  DEF Student3 Transform {
+    translation 6 1 0
+    children [
+      Shape {
+        appearance Appearance {
+          material Material {
+            diffuseColor 0.9 0.3 0.5
+          }
+        }
+        geometry Box { size 1 2 1 }
+      }
+      Transform {
+        translation 0 1.5 0
+        children [
+          Shape {
+            appearance Appearance {
+              material Material {
+                diffuseColor 1 0.8 0.6
+              }
+            }
+            geometry Sphere {
+              radius 0.5
+            }
+          }
+        ]
+      }
+      DEF ClickSensor TouchSensor {
+        description "Click to move student"
+      }
+    ]
+  }
+
+
+# Add movement to student
+DEF StudentMovement TimeSensor {
+  cycleInterval 10.0
+  loop TRUE
+  enabled FALSE
+}
+
+DEF StudentInterpolator PositionInterpolator {
+  key [0.0 0.5 1.0]
+  keyValue [
+    6 1 0
+    6 4 0
+    6 1 0
+  ]
+}
+
+ROUTE StudentMovement.fraction_changed TO StudentInterpolator.set_fraction
+ROUTE StudentInterpolator.value_changed TO Student3.set_translation
+
+# Add rotation to student
+DEF StudentRotationInterpolator OrientationInterpolator {
+  key [0.0 0.5 1.0]
+  keyValue [
+    0 0 1 0.0
+    0 0 1 0
+    0 0 1 0.0
+  ]
+}
+
+ROUTE StudentMovement.fraction_changed TO StudentRotationInterpolator.set_fraction
+ROUTE StudentRotationInterpolator.value_changed TO Student3.set_rotation
+
+# Define a Script node for BooleanToggle functionality
+DEF BooleanToggle Script {
+  field SFBool toggle FALSE
+  eventIn SFTime set_toggle
+  eventOut SFBool booleanOutput
+  url "javascript:
+    function set_toggle(value) {
+      toggle = !toggle;
+      booleanOutput = toggle;
+    }
+  "
+}
+
+# ROUTE connections
+ROUTE ClickSensor.touchTime TO BooleanToggle.set_toggle
+ROUTE BooleanToggle.booleanOutput TO StudentMovement.set_enabled
+
+
+    Transform {
+      translation 0 1 6
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.2 0.8 0.2
+            }
+          }
+          geometry Box {
+            size 1 2 1
+          }
+        },
+        Transform {
+          translation 0 1.5 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0.8 0.6
+                }
+              }
+              geometry Sphere {
+                radius 0.5
+              }
+            }
+          ]
+        }
+      ]
+    }
+
+    Transform {
+      translation 6 1 6
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 0.2 0.2 0.8
+            }
+          }
+          geometry Box {
+            size 1 2 1
+          }
+        },
+        Transform {
+          translation 0 1.5 0
+          children [
+            Shape {
+              appearance Appearance {
+                material Material {
+                  diffuseColor 1 0.8 0.6
+                }
+              }
+              geometry Sphere {
+                radius 0.5
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
