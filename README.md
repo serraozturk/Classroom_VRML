@@ -1,2 +1,1 @@
-# Classroom_VRML
-A project that I made with VRML. 
+This VRML (Virtual Reality Modeling Language) project represents a virtual classroom environment. The primary purpose of this environment is to simulate a classroom setting, including structural elements such as walls, floors, and ceilings, as well as interactive components like students, teachers, windows, lights, board, clock and various classroom objects. The project aims to provide an immersive and interactive experience that can be utilized for various educational purposes, including virtual learning and classroom management simulations.
